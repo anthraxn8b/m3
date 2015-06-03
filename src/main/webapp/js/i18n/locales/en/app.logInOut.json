@@ -1,3 +1,6 @@
 {
-  "currentlyLoggedInMessage" : "You are currently logged is as user __username__"
+  "username" : "username",
+  "password" : "password",
+  "login"    : "Sign In",
+  "logout"   : "Sign Out \"{{usernameForLogin}}\""
 }

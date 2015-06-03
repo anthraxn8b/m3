@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="myApp" data-ng-controller="userController">
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>M3 | BC-Herscheid e.V.</title>
+    <title data-translate="app:title"></title>
 
 	<link type="text/css" rel="stylesheet" href="css/toastr.css">
 
-    <script type="text/javascript" src="js/atmosphere.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/atmosphere.js"></script>
 
     <script src="js/angular.js"></script>
     <script src="js/angular-base64.js"></script>
     <script src="js/angular-animate.js"></script>
     <script src="js/angular-idle.js"></script>
+    <script src="js/angular-translate.js"></script>
+    <script src="js/angular-translate-loader-partial.js"></script>
 
     <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
     <link href="js/bootstrap-3.3.4-dist/css/bootstrap.css" rel="stylesheet">
-
 
     <script src="js/toastr.js"></script>
 
@@ -28,46 +29,44 @@
 
     <script src="js/ng-fab-form.js"></script>
 
-    <script src="js/i18n/i18next-1.9.0.js"></script>
-
     <script src="js/application.js"></script>
     <link href="css/application.css" rel="stylesheet">
 
 </head>
-<body data-ng-app="myApp" data-ng-controller="userController">
+<body>
 
     <!-- Static navbar -->
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only" data-i18n="toggleNav"></span>
+                    <span class="sr-only" data-translate="toggleNav"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><span data-i18n="app:name"></span> <span data-i18n="app:subtitle" style="font-size:50%;"></span></a>
+                <a class="navbar-brand" href="#"><span data-translate="app:name"></span> <span data-translate="app:subtitle" style="font-size:50%;"></span></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li               ><a href="#"        data-i18n="app.nav:home"   ></a></li>
-                    <li class="active"><a href="#players" data-i18n="app.nav:players"></a></li>
-                    <li               ><a href="#teams"   data-i18n="app.nav:teams"  ></a></li>
-                    <li               ><a href="#matches" data-i18n="app.nav:matches"></a></li>
-                    <li               ><a href="#results" data-i18n="app.nav:results"></a></li>
+                    <li               ><a href="#"        data-translate="app.nav:home"   ></a></li>
+                    <li class="active"><a href="#players" data-translate="app.nav:players"></a></li>
+                    <li               ><a href="#teams"   data-translate="app.nav:teams"  ></a></li>
+                    <li               ><a href="#matches" data-translate="app.nav:matches"></a></li>
+                    <li               ><a href="#results" data-translate="app.nav:results"></a></li>
                 </ul>
                 <form class="navbar-form navbar-right" data-ng-show="!checkIfLoggedIn()">
+                    <img data-ng-src="{{languageFlagUrl}}" style="" alt="" data-translate="[alt]app:currentLanguageFlagAlt" height="30" data-ng-click="selectLanguage()">
                     <div class="form-group">
-                        <input id="usernameForLogin" type="text" placeholder="" data-i18n="[placeholder]app.logInOut:username" class="form-control" data-ng-model="usernameForLogin">
+                        <input id="usernameForLogin" type="text" placeholder="{{ 'app.logInOut:username' | translate }}" class="form-control" data-ng-model="usernameForLogin">
                     </div>
                     <div class="form-group">
-                        <input id="passwordForLogin" type="password" placeholder="" data-i18n="[placeholder]app.logInOut:password" class="form-control" data-ng-model="passwordForLogin">
+                        <input id="passwordForLogin" type="password" placeholder="{{ 'app.logInOut:password' | translate }}" class="form-control" data-ng-model="passwordForLogin">
                     </div>
-                    <button type="button" class="btn btn-primary" data-ng-click="login()" data-i18n="app.logInOut:login"></button>
+                    <button type="button" class="btn btn-primary" data-ng-click="login()" data-translate="app.logInOut:login"></button>
                 </form>
                 <form class="navbar-form navbar-right" data-ng-show="checkIfLoggedIn()">
-                    <span class="label label-info loginInfo" data-i18n="app.logInOut:currentlyLoggedInMessage"></span>
-                    <button type="button" class="btn btn-primary" data-ng-click="logout()"><span data-i18n="app.logInOut:logout"></span><span class="badge">{{countdown}}</span></button>
+                    <button type="button" class="btn btn-primary" data-ng-click="logout()">{{ 'app.logInOut:logout' | translate:{username : usernameForLogin} }}<span class="badge">{{countdown}}</span></button>
                 </form>
             </div><!--/.nav-collapse -->
         </div>
@@ -148,13 +147,6 @@
 
     </div> <!-- /container -->
 
-<!--
-            <div data-ng-controller="loginCtrl">
-                <button class="btn" data-ng-click="openLogin()">open login</button>
-                <button class="btn" data-ng-click="logout()">logout</button>
-            </div>-->
-
-
     <script type="text/ng-template" id="warning-dialog.html">
         <div class="modal-header">
             <h3>You're Idle. :o)</h3>
@@ -165,7 +157,6 @@
                 If you want to stay logged in, do something (move the mouse, scroll...)!
             </progressbar>
         </div>
-
     </script>
     <script type="text/ng-template" id="timedout-dialog.html">
         <div class="modal-header">
@@ -177,7 +168,6 @@
             </p>
         </div>
     </script>
-
 
 </body>
 </html>

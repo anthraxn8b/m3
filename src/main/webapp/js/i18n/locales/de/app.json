@@ -1,4 +1,5 @@
 {
   "name"     : "M3",
-  "subtitle" : "MassMatchMaker"
+  "subtitle" : "MassMatchMaker",
+  "currentLanguageFlagAlt" : "Flag representing the current langusge \"{{currentLanguage}}\""
 }

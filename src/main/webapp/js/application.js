@@ -19,47 +19,36 @@ toastr.options = {
 
 var basicAuthHeader = null;
 
-//var option = { lng: 'en-US', resGetPath: 'js/i18n/locales/__lng__/__ns__.json' };
-var option = {
-    //lng: 'de',
-    resGetPath: 'js/i18n/locales/__lng__/__ns__.json',
-    ns: { namespaces: ['app', 'app.nav', 'app.logInOut'], defaultNs: 'app.nav'},
-    useLocalStorage: false,
-    debug: true
-};
+var app = angular.module('myApp', ['base64', 'ui.bootstrap', 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ngIdle', 'pascalprecht.translate']);
 
-i18n.init(option, function(t) {
-
-    //i18n.loadNamespace('app.nav', function() { /* loaded */ });
-
-    // translate nav
-    //$(".navbar-brand").i18n();
-    //$(".nav").i18n();
-    $("nav").i18n();
-
-    // programatical access
-    //var appName = t("app.name");
-});
-
-
-
-var app = angular.module('myApp', ['base64', 'ui.bootstrap', 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ngIdle']);
-/*
-app.config(['KeepaliveProvider', 'IdleProvider', function(KeepaliveProvider, IdleProvider) {
-    IdleProvider.idle(5);
-    IdleProvider.timeout(5);
-    KeepaliveProvider.interval(10);
-}]);
-*/
 app.controller('userController',
-    function($scope, $http, $timeout, $base64, uiGridConstants, $log, Idle, Keepalive, $modal) {
+    function($scope, $http, $timeout, $base64, uiGridConstants, $log, Idle, Keepalive, $modal, $translate, $translatePartialLoader) {
 
-        //$scope.users = [];
+        $scope.currentLanguage = null; //"de";
+        $scope.languageFlagUrl = "images/flagOfGermany.svg";
+        $scope.selectLanguage = function() {
+
+            if($scope.currentLanguage == "de") {
+                $scope.currentLanguage = "en";
+                $scope.languageFlagUrl = "images/flagOfTheUnitedKingdom.svg";
+            }
+            else {
+                $scope.currentLanguage = "de"
+                $scope.languageFlagUrl = "images/flagOfGermany.svg";
+            }
+
+            $translatePartialLoader.addPart('all');
+            $translate.use($scope.currentLanguage);
+        }
+
+        $timeout(function() {
+            $scope.selectLanguage();
+        });
+
         $scope.players = [];
         $scope.roles = [];
         $scope.usernameForLogin = null;
         $scope.passwordForLogin = null;
-
 
         $scope.checkIfLoggedIn = function()
         {
@@ -100,8 +89,10 @@ app.controller('userController',
         }
 
         $scope.logout = function() {
+
             $scope.usernameForLogin = null;
             $scope.passwordForLogin = null;
+            $scope.stopIdleWatcher();
             $log.log("removed username and password from memory");
             $scope.roles = [];
             $log.log("removed roles from memory");
@@ -133,6 +124,7 @@ app.controller('userController',
         // SOCKETS!!! YEHA!
         
         var request = {
+            // todo: reading the location from string is a bad idea! there will be signs like that:#
             url: document.location.toString() + 'rest/entity/player/websocket',
             contentType: "application/json",
             logLevel: 'debug',
@@ -179,13 +171,9 @@ app.controller('userController',
         .error(function(data, status, headers, config, statusText) {
         	toastr.error(data, "Error");
         });
-   // })
 
 
 
-
-
-   // .controller('idleController', function($scope, Idle, Keepalive, $modal){
         $scope.started = false;
 
         function closeModals() {
@@ -243,7 +231,20 @@ app.controller('userController',
         IdleProvider.timeout(5);
         KeepaliveProvider.interval(10);
     })
-/*
-    .run(['Idle', function(Idle) {
-        Idle.watch();
-    }])*/;
+
+    .config(function($translateProvider, $translatePartialLoaderProvider ) {
+        $translateProvider.useLoader(
+            '$translatePartialLoader',
+            { urlTemplate: '/js/i18n/locales/{lang}/{part}.json' }
+        )
+        $translateProvider.preferredLanguage('de');
+    })
+
+    .value('language', 'de')
+    .run(function($rootScope,  $translate, $translatePartialLoader) {
+        $rootScope.$on('$translatePartialLoaderStructureChanged', function () {
+            $translate.refresh();
+        });
+    })
+;
+

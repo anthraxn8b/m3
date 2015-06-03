@@ -1,0 +1,17 @@
+{
+  "app:title"    : "M3 | BC-Herscheid e.V.",
+  "app:name"     : "M3",
+  "app:subtitle" : "Mass Match Making",
+
+  "app.nav:home"      : "Startseite",
+  "app.nav:players"   : "Spieler",
+  "app.nav:teams"     : "Teams",
+  "app.nav:matches"   : "Spiele",
+  "app.nav:results"   : "Ergebnisse",
+  "app.nav:toggleNav" : "Navigation umschalten",
+
+  "app.logInOut:username" : "Benutzername",
+  "app.logInOut:password" : "Passwort",
+  "app.logInOut:login"    : "Anmelden",
+  "app.logInOut:logout"   : "\"{{ username }}\" abmelden"
+}
