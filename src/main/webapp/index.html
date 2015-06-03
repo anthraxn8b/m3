@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>M3 | Home</title>
+    <title>M3 | BC-Herscheid e.V.</title>
 
 	<link type="text/css" rel="stylesheet" href="css/toastr.css">
 
@@ -28,6 +28,8 @@
 
     <script src="js/ng-fab-form.js"></script>
 
+    <script src="js/i18n/i18next-1.9.0.js"></script>
+
     <script src="js/application.js"></script>
     <link href="css/application.css" rel="stylesheet">
 
@@ -39,33 +41,33 @@
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only" data-i18n="toggleNav"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">M3 <span style="font-size:50%;">MassMatchMaker</span></a>
+                <a class="navbar-brand" href="#"><span data-i18n="app:name"></span> <span data-i18n="app:subtitle" style="font-size:50%;"></span></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
-                    <li class="active"><a href="#players">Players</a></li>
-                    <li><a href="#teams">Teams</a></li>
-                    <li><a href="#matches">Matches</a></li>
-                    <li><a href="#results">Results</a></li>
+                    <li               ><a href="#"        data-i18n="app.nav:home"   ></a></li>
+                    <li class="active"><a href="#players" data-i18n="app.nav:players"></a></li>
+                    <li               ><a href="#teams"   data-i18n="app.nav:teams"  ></a></li>
+                    <li               ><a href="#matches" data-i18n="app.nav:matches"></a></li>
+                    <li               ><a href="#results" data-i18n="app.nav:results"></a></li>
                 </ul>
                 <form class="navbar-form navbar-right" data-ng-show="!checkIfLoggedIn()">
                     <div class="form-group">
-                        <input id="usernameForLogin" type="text" placeholder="Username" class="form-control" data-ng-model="usernameForLogin">
+                        <input id="usernameForLogin" type="text" placeholder="" data-i18n="[placeholder]app.logInOut:username" class="form-control" data-ng-model="usernameForLogin">
                     </div>
                     <div class="form-group">
-                        <input id="passwordForLogin" type="password" placeholder="Password" class="form-control" data-ng-model="passwordForLogin">
+                        <input id="passwordForLogin" type="password" placeholder="" data-i18n="[placeholder]app.logInOut:password" class="form-control" data-ng-model="passwordForLogin">
                     </div>
-                    <button type="button" class="btn btn-primary" data-ng-click="login()">Sign in</button>
+                    <button type="button" class="btn btn-primary" data-ng-click="login()" data-i18n="app.logInOut:login"></button>
                 </form>
                 <form class="navbar-form navbar-right" data-ng-show="checkIfLoggedIn()">
-                    <span class="label label-info loginInfo">You are logged in as user &quot;{{usernameForLogin}}&quot;!</span>
-                    <button type="button" class="btn btn-primary" data-ng-click="logout()">Logout <span class="badge">{{countdown}}</span></button>
+                    <span class="label label-info loginInfo" data-i18n="app.logInOut:currentlyLoggedInMessage"></span>
+                    <button type="button" class="btn btn-primary" data-ng-click="logout()"><span data-i18n="app.logInOut:logout"></span><span class="badge">{{countdown}}</span></button>
                 </form>
             </div><!--/.nav-collapse -->
         </div>

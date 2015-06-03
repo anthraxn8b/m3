@@ -1,0 +1,7 @@
+{
+  "currentlyLoggedInMessage" : "Sie sind angemeldet als Benutzer \"{{usernameForLogin}}\"",
+  "username" : "Benutzername",
+  "password" : "Passwort",
+  "login"    : "Anmelden",
+  "logout"   : "Abmelden"
+}

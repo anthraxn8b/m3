@@ -19,6 +19,30 @@ toastr.options = {
 
 var basicAuthHeader = null;
 
+//var option = { lng: 'en-US', resGetPath: 'js/i18n/locales/__lng__/__ns__.json' };
+var option = {
+    //lng: 'de',
+    resGetPath: 'js/i18n/locales/__lng__/__ns__.json',
+    ns: { namespaces: ['app', 'app.nav', 'app.logInOut'], defaultNs: 'app.nav'},
+    useLocalStorage: false,
+    debug: true
+};
+
+i18n.init(option, function(t) {
+
+    //i18n.loadNamespace('app.nav', function() { /* loaded */ });
+
+    // translate nav
+    //$(".navbar-brand").i18n();
+    //$(".nav").i18n();
+    $("nav").i18n();
+
+    // programatical access
+    //var appName = t("app.name");
+});
+
+
+
 var app = angular.module('myApp', ['base64', 'ui.bootstrap', 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ngIdle']);
 /*
 app.config(['KeepaliveProvider', 'IdleProvider', function(KeepaliveProvider, IdleProvider) {

@@ -1,0 +1,9 @@
+{
+  "home"    : "Startseite",
+  "players" : "Spieler",
+  "teams"   : "Teams",
+  "matches" : "Spiele",
+  "results" : "Ergebnisse",
+
+  "toggleNav" : "Navigation umschalten"
+}
