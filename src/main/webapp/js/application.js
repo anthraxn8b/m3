@@ -84,7 +84,7 @@ app.controller('userController',
             basicAuthHeader = null;
             $log.log("deleted basic auth header: " + basicAuthHeader);
 
-            toastr.success(data, "You have been logged out!");
+            toastr.warning("You have been logged out!", "Logout");
         }
 
         $scope.addPlayer = function () {
@@ -192,11 +192,11 @@ app.controller('userController',
         $scope.$on('IdleTimeout', function() {
             $log.debug("Logging out!")
             $scope.logout();
-            closeModals();
+            closeModals();/*
             $scope.timedout = $modal.open({
                 templateUrl: 'timedout-dialog.html',
                 windowClass: 'modal-danger'
-            });
+            });*/
         });
 
         $scope.startIdleWatcher = function() {
