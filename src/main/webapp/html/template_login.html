@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h1>Login</h1>
+</div>
+<form>
+    <div class="modal-body">
+        <label for="loginUsername">Username</label>
+        <input id="loginUsername" type="text"     data-ng-model="user.username" /><br />
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" data-ng-model="user.password" />
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn primary-btn" data-ng-click="submit()">Submit</button>
+    </div>
+</form>

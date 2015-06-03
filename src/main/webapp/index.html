@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>M3 | Home</title>
+
+	<link type="text/css" rel="stylesheet" href="css/toastr.css">
+
+    <script type="text/javascript" src="js/atmosphere.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+    <script src="js/angular.js"></script>
+    <script src="js/angular-base64.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/angular-idle.js"></script>
+
+    <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
+    <link href="js/bootstrap-3.3.4-dist/css/bootstrap.css" rel="stylesheet">
+
+
+    <script src="js/toastr.js"></script>
+
+    <script src="js/ui-grid-unstable.js"></script>
+    <link href="css/ui-grid-unstable.css" rel="stylesheet">
+
+    <script src="js/ng-fab-form.js"></script>
+
+    <script src="js/application.js"></script>
+    <link href="css/application.css" rel="stylesheet">
+
+</head>
+<body data-ng-app="myApp" data-ng-controller="userController">
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">M3 <span style="font-size:50%;">MassMatchMaker</span></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Home</a></li>
+                    <li class="active"><a href="#players">Players</a></li>
+                    <li><a href="#teams">Teams</a></li>
+                    <li><a href="#matches">Matches</a></li>
+                    <li><a href="#results">Results</a></li>
+                </ul>
+                <form class="navbar-form navbar-right" data-ng-show="!checkIfLoggedIn()">
+                    <div class="form-group">
+                        <input id="usernameForLogin" type="text" placeholder="Username" class="form-control" data-ng-model="usernameForLogin">
+                    </div>
+                    <div class="form-group">
+                        <input id="passwordForLogin" type="password" placeholder="Password" class="form-control" data-ng-model="passwordForLogin">
+                    </div>
+                    <button type="button" class="btn btn-primary" data-ng-click="login()">Sign in</button>
+                </form>
+                <form class="navbar-form navbar-right" data-ng-show="checkIfLoggedIn()">
+                    <span class="label label-info loginInfo">You are logged in as user &quot;{{usernameForLogin}}&quot;!</span>
+                    <button type="button" class="btn btn-primary" data-ng-click="logout()">Logout <span class="badge">{{countdown}}</span></button>
+                </form>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Main component for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <h1>New Player</h1>
+            <p>Fill out the form and click &quot;Add Player&quot; to create a new player!</p>
+            <p class="label label-warning">It is important to provide the correct player details! In the worst case you will be disqualified!</p>
+            <div>
+                <form>
+                    <div class="form-group">
+                        <label class="control-label"
+                               for="usernameForNewPlayer">Username</label>
+                        <input id="usernameForNewPlayer"
+                               type="text"
+                               data-ng-model="user.username"
+                               class="form-control"
+                               placeholder="Username"
+                               required="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"
+                               for="passwordForNewPlayer">Password</label>
+                        <input id="passwordForNewPlayer"
+                               type="password"
+                               data-ng-model="user.password"
+                               class="form-control"
+                               placeholder="Password"
+                               required="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"
+                               for="playerFirstnameForNewPlayer">Firstname</label>
+                        <input id="playerFirstnameForNewPlayer"
+                               type="text"
+                               data-ng-model="player.firstname"
+                               class="form-control"
+                               placeholder="Firstname"
+                               required="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"
+                               for="playerLastnameForNewPlayer">Lastname</label>
+                        <input id="playerLastnameForNewPlayer"
+                               type="text"
+                               data-ng-model="player.lastname"
+                               class="form-control"
+                               placeholder="Lastname"
+                               required="" />
+                    </div>
+                </form>
+            </div>
+            <p>
+                <a class="btn btn-lg btn-primary" data-ng-click="addPlayer()" role="button">Add Player</a>
+            </p>
+        </div>
+
+
+        <div class="jumbotron">
+            <h1>Players</h1>
+            <p>This is a quick player navigation...</p>
+
+            <!--
+            <ul>
+                <li data-ng-repeat="x in players">
+                    {{ x.firstname + ', ' + x.lastname }}
+                </li>
+            </ul>
+            -->
+
+            <div class="grid" data-ui-grid="gridOptions" ui-grid-edit ui-grid-resize-columns></div>
+
+        </div>
+
+    </div> <!-- /container -->
+
+<!--
+            <div data-ng-controller="loginCtrl">
+                <button class="btn" data-ng-click="openLogin()">open login</button>
+                <button class="btn" data-ng-click="logout()">logout</button>
+            </div>-->
+
+
+    <script type="text/ng-template" id="warning-dialog.html">
+        <div class="modal-header">
+            <h3>You're Idle. :o)</h3>
+        </div>
+        <div idle-countdown="countdown" ng-init="countdown=5" class="modal-body">
+            <progressbar max="5" value="5" animate="false" class="progress-striped active">
+                You'll be logged out in {{countdown}} second(s).<br />
+                If you want to stay logged in, do something (move the mouse, scroll...)!
+            </progressbar>
+        </div>
+
+    </script>
+    <script type="text/ng-template" id="timedout-dialog.html">
+        <div class="modal-header">
+            <h3>You've Timed Out!</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                You were idle too long. You have been logged out.
+            </p>
+        </div>
+    </script>
+
+
+</body>
+</html>
